@@ -8,6 +8,11 @@ get '/' do
 end
 
 get '/new' do
-	erb :new
-	
+	erb :new	
+end
+ 
+post '/new' do
+	content = params[:content]
+
+	erb "You have typed: #{content}"
 end
