@@ -54,3 +54,11 @@ get '/post/:post_id' do
 	@row = results[0]
 	erb :post
 end
+
+#post для ^
+
+post '/post/:post_id' do
+	post_id = params[:post_id]
+	content = params[:content]
+	erb "You typed comment: #{content} for post #{post_id}"
+end
