@@ -19,6 +19,7 @@ configure do
 	@db.execute 'CREATE TABLE IF NOT EXISTS "Posts" 
 	(
 		"id" INTEGER PRIMARY KEY AUTOINCREMENT, 
+		"user" TEXT,
 		"created_date" DATE, 
 		"content" TEXT
 	);'
@@ -44,13 +45,14 @@ get '/new' do
 end
  
 post '/new' do
+	user = params[:user]
 	content = params[:content]
 	if content.length == 0
 		@error = "Type text"
 		return erb :new
 	end
 
-	@db.execute 'insert into Posts (content, created_date) values (?, datetime())', [content]
+	@db.execute 'insert into Posts (user, content, created_date) values (?, ?, datetime())', [user, content]
 
 	redirect to '/'
 end
@@ -72,6 +74,11 @@ post '/post/:post_id' do
 	post_id = params[:post_id]
 	content = params[:content]
 
+	if content.length == 0
+		@error = "Type text blyat"
+		return redirect to ('/post/' + post_id)
+	end
+
 	@db.execute 'insert into Comments 
 	(
 		content, 
@@ -84,6 +91,7 @@ post '/post/:post_id' do
 			datetime(), 
 			?
 	)', [content, post_id]
+
 
 	redirect to ('/post/' + post_id)
 end

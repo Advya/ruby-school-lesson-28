@@ -2,19 +2,22 @@
 
     <%= @row['created_date'] %>
     <br />
+    <p> Author: <%= @row['user'] %> </p> <br />
     <p> <%= @row['content'] %> </p>
     <br />
     
     <hr />
     <br />
+
+
 <h4>Comments:</h4>
 <% @comment.each do |comment| %>
-  <br />
-  <p>
-    <%= comment['id']%>)
-    <%= comment['content']%>  
-  </p>
-  <hr />
+    <br />
+    <p>    
+      <%= comment['content']%>  <br />
+      <span style="font-size: 75%; color: grey">Added <%= comment['created_date']%> </span>
+    </p>
+    <hr />
 <%end%>
 <form action="/post/<%= @row['id'] %>" method="post" role="form">
   <textarea name="content" class="form-control" rows="6" placeholder="Type your COMMENT text here"></textarea>
